@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import * as logger from 'morgan';
+import * as cors from 'cors';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,6 +11,8 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+  app.use(cors({ origin: '*' }));
+  app.use(logger('dev'));
   await app.listen(3000);
 }
 bootstrap();
